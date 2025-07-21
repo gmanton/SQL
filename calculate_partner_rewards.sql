@@ -23,18 +23,18 @@ filtered_user_daily_stats AS (
 
         SUM(uds.partner_revenue) AS partner_revenue,
         SUM(uds.gross_revenue) AS gross_revenue, 
-        SUM(uds.betting_revenue) AS betting_revenue, 
+        SUM(uds.secondary_revenue) AS secondary_revenue, 
         SUM(uds.total_purchases) AS total_purchases, 
         SUM(uds.total_refunds) AS total_refunds, 
         SUM(uds.promo_cost) AS promo_cost,
 
         (
             CASE 
-                WHEN uds.project_id = 1 THEN ROUND(((SUM(uds.gross_revenue) * 1) - SUM(uds.promo_cost) - (SUM(uds.total_purchases) - SUM(uds.total_refunds)) * 0.05), 0)
-                WHEN uds.project_id = 3 THEN ROUND(((SUM(uds.gross_revenue) * 0.85) + (SUM(uds.betting_revenue) * 0.8) - SUM(uds.promo_cost) - (SUM(uds.total_purchases) - SUM(uds.total_refunds)) * 0.05), 0)
-                WHEN uds.project_id = 5 THEN ROUND(((SUM(uds.gross_revenue) * 0.835) + (SUM(uds.betting_revenue) * 0.8) - SUM(uds.promo_cost) - (SUM(uds.total_purchases) - SUM(uds.total_refunds)) * 0.1), 0)
-                WHEN uds.project_id = 6 THEN ROUND(((SUM(uds.gross_revenue) * 0.65) + (SUM(uds.betting_revenue) * 1) - SUM(uds.promo_cost) - (SUM(uds.total_purchases) - SUM(uds.total_refunds)) * 0.05), 0)
-                WHEN uds.project_id = 10 THEN ROUND(((SUM(uds.gross_revenue) * 0.85) + (SUM(uds.betting_revenue) * 0.8) - SUM(uds.promo_cost) - (SUM(uds.total_purchases) - SUM(uds.total_refunds)) * 0.05), 0)
+                WHEN uds.project_id = 1 THEN ROUND(((SUM(uds.gross_revenue) * 0.95) - SUM(uds.promo_cost) - (SUM(uds.total_purchases) - SUM(uds.total_refunds)) * 0.03), 0)
+                WHEN uds.project_id = 3 THEN ROUND(((SUM(uds.gross_revenue) * 0.8) + (SUM(uds.secondary_revenue) * 0.7) - SUM(uds.promo_cost) - (SUM(uds.total_purchases) - SUM(uds.total_refunds)) * 0.03), 0)
+                WHEN uds.project_id = 5 THEN ROUND(((SUM(uds.gross_revenue) * 0.75) + (SUM(uds.secondary_revenue) * 0.7) - SUM(uds.promo_cost) - (SUM(uds.total_purchases) - SUM(uds.total_refunds)) * 0.07), 0)
+                WHEN uds.project_id = 6 THEN ROUND(((SUM(uds.gross_revenue) * 0.6) + (SUM(uds.secondary_revenue) * 0.9) - SUM(uds.promo_cost) - (SUM(uds.total_purchases) - SUM(uds.total_refunds)) * 0.03), 0)
+                WHEN uds.project_id = 10 THEN ROUND(((SUM(uds.gross_revenue) * 0.8) + (SUM(uds.secondary_revenue) * 0.7) - SUM(uds.promo_cost) - (SUM(uds.total_purchases) - SUM(uds.total_refunds)) * 0.03), 0)
                 ELSE 0 
             END
         ) / 100 AS net_revenue
